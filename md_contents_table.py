@@ -42,7 +42,7 @@ class md_contents_table():
         
         # Write the contents table        
         with open(self.file_path, "w") as file:
-            file.write("<a name=\"start-of-contents\" />\n# Contents\n\n")
+            file.write("\n<a name=\"start-of-contents\" />\n# Contents\n\n")
 
             # Loop through all the headings
             for index, level in enumerate(self.heading_level):
@@ -109,5 +109,8 @@ class md_contents_table():
 
 if __name__ == "__main__":
     import sys
-    md_file = md_contents_table(sys.argv[1])
+    try:
+        md_file = md_contents_table(sys.argv[1])
+    except IndexError:
+        raise IndexError("No file was provided. Please provide a file ending \".md\" when calling the script.")
     md_file.create_contents_table()
