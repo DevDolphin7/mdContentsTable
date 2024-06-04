@@ -36,13 +36,11 @@ class md_contents_table():
 
         # Set up variables to number the contents table
         current_heading_level = 0
-        heading_list_number = {}
-        for num in range(1,7):
-            heading_list_number[num] = 0
+        heading_list_number = {num: 0 for num in range(1,7)}
         
         # Write the contents table        
         with open(self.file_path, "w") as file:
-            file.write("\n<a name=\"start-of-contents\" />\n# Contents\n\n")
+            file.write("<a name=\"start-of-contents\" />\n# Contents\n\n")
 
             # Loop through all the headings
             for index, level in enumerate(self.heading_level):
@@ -55,9 +53,8 @@ class md_contents_table():
                 heading_list_number[current_heading_level] += 1
 
                 # Add additional whitespace for every level of heading
-                tabs = ""
-                for _ in range(0, current_heading_level):
-                    tabs += "  "
+                tabs = "".join(" " for x in range(0, current_heading_level))
+
                 # Write the heading into the .md
                 file.write(tabs + str(heading_list_number[current_heading_level]) +
                            f". {self.heading_text[index][current_heading_level + 1:]}\n")
