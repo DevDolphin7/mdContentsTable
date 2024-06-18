@@ -3,7 +3,7 @@ import re
 
 class md_contents_table():
 
-    def __init__(self, file_path):
+    def __init__(self, file_path, remove_current_table = True):
         """Checks a valid .md file exists in order to create a contents table using create_contents_table().
         Parameters:
         - file_path (str): "path/to/file.md"
@@ -14,6 +14,9 @@ class md_contents_table():
         
         elif not os.path.exists(file_path):
             raise ValueError(f"Please provide the path to an existing .md file, not: {file_path}")
+
+        self.file_path = file_path
+        self.remove_current_table = remove_current_table
 
 if __name__ == "__main__":
     md_file = md_contents_table("./test.md")

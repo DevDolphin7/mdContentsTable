@@ -43,3 +43,11 @@ def test_initialisation():
   # Initialising stores the file path as a class variable
   test_mdCT = mdCT.md_contents_table("./test.md")
   assert test_mdCT.file_path == "./test.md"
+
+  # Initialising stores an optional bool that removes a previously generated contents table
+  test_mdCT = mdCT.md_contents_table("./test.md")
+  assert test_mdCT.remove_current_table == True
+
+  test_mdCT = mdCT.md_contents_table("./test.md", False)
+  assert test_mdCT.remove_current_table == False
+
