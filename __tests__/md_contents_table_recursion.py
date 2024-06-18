@@ -25,12 +25,6 @@ Text
 import md_contents_table as mdCT
 import pytest
 
-# Initialise a class
-## Raise error if file path ends with .md
-## Raise error if the file does not exist
-## Store the file path
-## Optionally store a bool to remove an existing contents table
-
 def test_initialisation():
   # Initialising with a file path that does not end with ".md" raises a ValueError
   with pytest.raises(ValueError):
@@ -51,3 +45,17 @@ def test_initialisation():
   test_mdCT = mdCT.md_contents_table("./test.md", False)
   assert test_mdCT.remove_current_table == False
 
+
+def test_reading_and_storing_file_contents():
+  pass
+
+# Read and store the contents of md file
+
+# Find and store all the headings from the md file contents
+## Numbered according to the number of #
+
+# Format the contents table ready to be written
+
+# Remove an exisitng contents table if required
+
+# Over-write the contents table then the rest of the file back to the file.
