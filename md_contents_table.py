@@ -18,6 +18,13 @@ class md_contents_table():
         self.file_path = file_path
         self.remove_current_table = remove_current_table
 
+    def read_file_contents(self):
+        with open(self.file_path, "r") as file:
+            self.file_contents = file.read()
+        with open(self.file_path, "a") as file:
+            file.write("hello")
+            file.close()
+
 if __name__ == "__main__":
     md_file = md_contents_table("./test.md")
     md_file.create_contents_table()

@@ -24,6 +24,8 @@ Text
 
 import md_contents_table as mdCT
 import pytest
+from os.path import getmtime
+from time import sleep
 
 def test_initialisation():
   # Initialising with a file path that does not end with ".md" raises a ValueError
@@ -48,9 +50,23 @@ def test_initialisation():
 
 # Read and store the contents of md file
 def test_reading_and_storing_file_contents():
-  # The contents of the file provided is read and stored
+  # The contents of a simple file is read and stored
   test_mdCT = mdCT.md_contents_table("./test one.md")
+  test_mdCT.read_file_contents()
   assert test_mdCT.file_contents == "Hello, world!"
+
+  # The file is not mutated (uses os.path.getmtime <- get time file was last modified)
+  input_file_path = "./test one.md"
+  before = getmtime(input_file_path)
+
+  test_mdCT = mdCT.md_contents_table(input_file_path)
+  test_mdCT.read_file_contents()
+
+  sleep(1)
+  mutated = getmtime(input_file_path)
+  print(before, "<-- before      ", mutated, "<-- mutated")
+  assert (mutated > before) == True
+
 
 
 # Find and store all the headings from the md file contents
