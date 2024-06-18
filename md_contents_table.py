@@ -1,5 +1,4 @@
 import os.path
-import re
 
 class md_contents_table():
 
@@ -24,7 +23,3 @@ class md_contents_table():
         with open(self.file_path, "a") as file:
             file.write("hello")
             file.close()
-
-if __name__ == "__main__":
-    md_file = md_contents_table("./test.md")
-    md_file.create_contents_table()
