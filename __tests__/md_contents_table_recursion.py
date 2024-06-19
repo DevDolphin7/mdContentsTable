@@ -73,8 +73,7 @@ def test_reading_and_storing_file_contents():
 ## Numbered according to the number of #
 
 
-## Finds 1 top level heading
-## Finds 1 of each level
+
 ## Finds multiple top level headings
 ## Finds multiple of each heading
 
@@ -85,7 +84,17 @@ def test_find_and_store_headings():
   test_mdCT.find_headings()
   assert test_mdCT.headings == []
 
+  ## Finds 1 top level heading
+  test_mdCT = mdCT.md_contents_table("./test 3 1 top level heading.md")
+  test_mdCT.read_file_contents()
+  test_mdCT.find_headings()
+  assert test_mdCT.headings == ["# Hello"]
 
+  ## Finds 1 of each level
+  test_mdCT = mdCT.md_contents_table("./test 4 1 each level heading.md")
+  test_mdCT.read_file_contents()
+  test_mdCT.find_headings()
+  assert test_mdCT.headings == ["# Hello"]
 
 # Format the contents table ready to be written
 
