@@ -24,8 +24,6 @@ Text
 
 import md_contents_table as mdCT
 import pytest
-from os.path import getmtime
-from time import sleep
 
 def test_initialisation():
   # Initialising with a file path that does not end with ".md" raises a ValueError
@@ -71,9 +69,15 @@ def test_reading_and_storing_file_contents():
   assert (before == mutated) == True
 
 
-
 # Find and store all the headings from the md file contents
 ## Numbered according to the number of #
+
+## Returns a dictionary with keys 0-6
+def test_find_and_store_headings():
+  test_mdCT = mdCT.md_contents_table("./test two.md")
+  test_mdCT.read_file_contents()
+  test_mdCT.find_headings()
+  assert test_mdCT.headings == {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
 
 # Format the contents table ready to be written
 
