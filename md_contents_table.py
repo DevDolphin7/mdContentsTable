@@ -25,15 +25,18 @@ class md_contents_table():
 
     def find_headings(self, headings=[], contents=None):
         self.headings = headings
+        print(self.headings, "<--- headings")
 
         # Initialise recursion
         if contents == None: contents = self.file_contents.split("\n")
 
+        print(contents, "<--- contents")
         # Recursive base case
         if len(contents) == 0: return
 
         if len(contents[0]) != 0:
             if contents[0][0] == "#": self.headings.append(contents[0])
+        
 
         # Recursive step
         contents.pop(0)

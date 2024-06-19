@@ -91,10 +91,15 @@ def test_find_and_store_headings():
   assert test_mdCT.headings == ["# Hello"]
 
   ## Finds 1 of each level
-  test_mdCT = mdCT.md_contents_table("./test 4 1 each level heading.md")
-  test_mdCT.read_file_contents()
-  test_mdCT.find_headings()
-  assert test_mdCT.headings == ["# Hello"]
+  test_three_mdCT = mdCT.md_contents_table("./test 4 1 each level heading.md")
+  test_three_mdCT.read_file_contents()
+  test_three_mdCT.find_headings()
+  assert test_three_mdCT.headings == ["# Hello",
+                                "## World",
+                                "###### Six",
+                                "### Three",
+                                "#### Four", 
+                                "##### Five"]
 
 # Format the contents table ready to be written
 
