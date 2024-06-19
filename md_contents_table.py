@@ -23,5 +23,5 @@ class md_contents_table():
             self.file_contents = file.read()
 
 
-    def find_headings(self):
-        self.headings = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
+    def find_headings(self, headings=[]):
+        self.headings = headings

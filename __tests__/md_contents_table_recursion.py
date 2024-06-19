@@ -28,33 +28,33 @@ import pytest
 def test_initialisation():
   # Initialising with a file path that does not end with ".md" raises a ValueError
   with pytest.raises(ValueError):
-    mdCT.md_contents_table("./test one")
+    mdCT.md_contents_table("./test 1 read file")
 
   # Initialising with a file that does not exist raises a ValueError
   with pytest.raises(ValueError):
     mdCT.md_contents_table("./hello_world.md")
 
   # Initialising stores the file path as a class variable
-  test_mdCT = mdCT.md_contents_table("./test one.md")
-  assert test_mdCT.file_path == "./test one.md"
+  test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
+  assert test_mdCT.file_path == "./test 1 read file.md"
 
   # Initialising stores an optional bool that removes a previously generated contents table
-  test_mdCT = mdCT.md_contents_table("./test one.md")
+  test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
   assert test_mdCT.remove_current_table == True
 
-  test_mdCT = mdCT.md_contents_table("./test one.md", False)
+  test_mdCT = mdCT.md_contents_table("./test 1 read file.md", False)
   assert test_mdCT.remove_current_table == False
 
 
 # Read and store the contents of md file
 def test_reading_and_storing_file_contents():
   # The contents of a simple file is read and stored
-  test_mdCT = mdCT.md_contents_table("./test one.md")
+  test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
   test_mdCT.read_file_contents()
   assert test_mdCT.file_contents == "Hello, world!"
 
   # The file is not mutated (uses os.path.getmtime <- get time file was last modified)
-  input_file_path = "./test one.md"
+  input_file_path = "./test 1 read file.md"
   with open(input_file_path, "r") as file:
     before = file.read()
     file.close()
@@ -72,12 +72,20 @@ def test_reading_and_storing_file_contents():
 # Find and store all the headings from the md file contents
 ## Numbered according to the number of #
 
-## Returns a dictionary with keys 0-6
+
+## Finds 1 top level heading
+## Finds 1 of each level
+## Finds multiple top level headings
+## Finds multiple of each heading
+
 def test_find_and_store_headings():
-  test_mdCT = mdCT.md_contents_table("./test two.md")
+  ## Stores a list of the headings found
+  test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
   test_mdCT.read_file_contents()
   test_mdCT.find_headings()
-  assert test_mdCT.headings == {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
+  assert test_mdCT.headings == []
+
+
 
 # Format the contents table ready to be written
 
