@@ -20,6 +20,3 @@ class md_contents_table():
     def read_file_contents(self):
         with open(self.file_path, "r") as file:
             self.file_contents = file.read()
-        with open(self.file_path, "a") as file:
-            file.write("hello")
-            file.close()

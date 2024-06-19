@@ -57,15 +57,18 @@ def test_reading_and_storing_file_contents():
 
   # The file is not mutated (uses os.path.getmtime <- get time file was last modified)
   input_file_path = "./test one.md"
-  before = getmtime(input_file_path)
+  with open(input_file_path, "r") as file:
+    before = file.read()
+    file.close()
 
   test_mdCT = mdCT.md_contents_table(input_file_path)
   test_mdCT.read_file_contents()
 
-  sleep(1)
-  mutated = getmtime(input_file_path)
-  print(before, "<-- before      ", mutated, "<-- mutated")
-  assert (mutated > before) == True
+  with open(input_file_path, "r") as file:
+    mutated = file.read()
+    file.close()
+
+  assert (before == mutated) == True
 
 
 
