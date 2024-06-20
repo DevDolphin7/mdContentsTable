@@ -12,6 +12,7 @@ class md_contents_table:
 
         self._file_contents = None
         self._headings = None
+        self._formatted_contents_table = ""
 
         if file_path[-3:] != ".md":
             raise ValueError(
@@ -47,3 +48,25 @@ class md_contents_table:
         # Recursive step
         contents.pop(0)
         self.find_headings(contents=contents)
+
+    def format_headings(self, headings=None, previous_level=0):
+        # Initialise recursion
+        if headings == None:
+            headings = self._headings
+
+        # Recursion base case
+        if len(headings) == 0:
+            return
+
+        # .search returns an object, .group returns the match
+        heading_level = re.search("^#{1,6} ", headings[0]).group()
+        # [:-1] removes the ending whitespace, len() converts # to number (heading level)
+        heading_level = len(heading_level[:-1])
+
+        if heading_level > previous_level:
+            heading_text = headings[0][heading_level + 1 :]
+            self._formatted_contents_table += f"\t{heading_level}. {heading_text}\n"
+
+        # Recursion step
+        headings.pop(0)
+        self.format_headings(headings=headings, previous_level=heading_level)
