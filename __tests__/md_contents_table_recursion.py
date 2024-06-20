@@ -56,7 +56,7 @@ def describe_initialisation():
 
 
 # Read and store the contents of md file
-def describe_reading_and_storing_file_contents():
+def describe_read_file_contents():
     def test_input_file_is_read():
         # The contents of a simple file is read and stored
         test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
@@ -81,8 +81,7 @@ def describe_reading_and_storing_file_contents():
 
 
 # Find and store all the headings from the md file contents
-## Numbered according to the number of #
-def describe_find_and_store_headings():
+def describe_find_headings():
     def test_able_to_store_headings():
         ## Stores a list of the headings found
         test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
@@ -164,7 +163,9 @@ def describe_find_and_store_headings():
         ]
 
 
-# Format the contents table ready to be written
+# Format the contents table ready to be written, numbered according to the heading level (number of #'s) and in what order they appear
+def describe_format_headings():
+    return    
 
 # Remove an exisitng contents table if required
 
