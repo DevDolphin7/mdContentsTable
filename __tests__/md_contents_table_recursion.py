@@ -45,13 +45,18 @@ def test_initialisation():
   test_mdCT = mdCT.md_contents_table("./test 1 read file.md", False)
   assert test_mdCT.remove_current_table == False
 
+  # Initialising resets all object properties that are not parameters
+  test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
+  assert test_mdCT._file_contents == None
+  assert test_mdCT._headings == None
+
 
 # Read and store the contents of md file
 def test_reading_and_storing_file_contents():
   # The contents of a simple file is read and stored
   test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
   test_mdCT.read_file_contents()
-  assert test_mdCT.file_contents == "Hello, world!"
+  assert test_mdCT._file_contents == "Hello, world!"
 
   # The file is not mutated (uses os.path.getmtime <- get time file was last modified)
   input_file_path = "./test 1 read file.md"
@@ -82,19 +87,26 @@ def test_find_and_store_headings():
   test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
   test_mdCT.read_file_contents()
   test_mdCT.find_headings()
-  assert test_mdCT.headings == []
+  assert test_mdCT._headings == []
 
   ## Finds 1 top level heading
   test_mdCT = mdCT.md_contents_table("./test 3 1 top level heading.md")
   test_mdCT.read_file_contents()
   test_mdCT.find_headings()
-  assert test_mdCT.headings == ["# Hello"]
+  assert test_mdCT._headings == ["# Hello"]
+
+  print(test_mdCT._file_contents, "<-- file contents pre test 3")
+  print(test_mdCT._headings, "<-- headings pre")
 
   ## Finds 1 of each level
-  test_three_mdCT = mdCT.md_contents_table("./test 4 1 each level heading.md")
-  test_three_mdCT.read_file_contents()
-  test_three_mdCT.find_headings()
-  assert test_three_mdCT.headings == ["# Hello",
+  test_mdCT = mdCT.md_contents_table("./test 4 1 each level heading.md")
+  print(test_mdCT._file_contents, "<-- file contents initialised")
+  print(test_mdCT._headings, "<-- headings initialised")
+  test_mdCT.read_file_contents()
+  test_mdCT.find_headings()
+  print(test_mdCT._file_contents, "<-- file contents post")
+  print(test_mdCT._headings, "<-- headings post")
+  assert test_mdCT._headings == ["# Hello",
                                 "## World",
                                 "###### Six",
                                 "### Three",

@@ -8,6 +8,9 @@ class md_contents_table():
         - file_path (str): "path/to/file.md"
         - remove_current_table (bool, optional): Removes previously made content table if it exists."""
 
+        self._file_contents = None
+        self._headings = None
+
         if file_path[-3:] != ".md":
             raise ValueError(f"Please provide a file path ending in '.md', not: {file_path}")
         
@@ -20,25 +23,21 @@ class md_contents_table():
 
     def read_file_contents(self):
         with open(self.file_path, "r") as file:
-            self.file_contents = file.read()
+            self._file_contents = file.read()
 
 
-    def find_headings(self, headings=[], contents=None):
-        self.headings = headings
-        print(self.headings, "<--- headings")
-
+    def find_headings(self, contents=None):
         # Initialise recursion
-        if contents == None: contents = self.file_contents.split("\n")
+        if self._headings == None: self._headings = []
+        if contents == None: contents = self._file_contents.split("\n")
 
-        print(contents, "<--- contents")
         # Recursive base case
         if len(contents) == 0: return
 
         if len(contents[0]) != 0:
-            if contents[0][0] == "#": self.headings.append(contents[0])
-        
+            if contents[0][0] == "#": self._headings.append(contents[0])
 
         # Recursive step
         contents.pop(0)
-        self.find_headings(headings=self.headings, contents=contents)
+        self.find_headings(contents=contents)
 
