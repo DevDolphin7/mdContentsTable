@@ -110,16 +110,35 @@ def describe_find_and_store_headings():
             "##### Five",
         ]
 
-    def test_finds_multiple_headings():
+    def test_finds_multiple_top_headings():
         ## Finds multiple top level headings
         test_mdCT = mdCT.md_contents_table("./test 5 multiple top level headings.md")
         test_mdCT.read_file_contents()
         test_mdCT.find_headings()
-        assert test_mdCT._headings == ["# Hello", "# World", "# How Are You?"]
+        assert test_mdCT._headings == ["# Hello", "# World", "# How are you?"]
 
+    def test_finds_multiple_each_headings():
         ## Finds multiple of each heading
+        test_mdCT = mdCT.md_contents_table(
+            "./test 6 multiple of each level headings.md"
+        )
+        test_mdCT.read_file_contents()
+        test_mdCT.find_headings()
+        assert test_mdCT._headings == [
+            "# Hello",
+            "## World",
+            "### How",
+            "#### Are",
+            "##### You?",
+            "## I'm",
+            "###### Good",
+            "# Thank",
+            "### You",
+            "#### For",
+            "##### Asking",
+        ]
 
-        ## Doesn't confuse 1 tag
+
 
         ## Doesn't confuse multiple tags
 
