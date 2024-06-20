@@ -138,9 +138,15 @@ def describe_find_and_store_headings():
             "##### Asking",
         ]
 
-
+    def test_doesnt_include_any_tags():
+        ## Doesn't confuse 1 tag
+        test_mdCT = mdCT.md_contents_table("./test 7 tag included.md")
+        test_mdCT.read_file_contents()
+        test_mdCT.find_headings()
+        assert test_mdCT._headings == ["# Hello"]
 
         ## Doesn't confuse multiple tags
+
 
 
 # Format the contents table ready to be written

@@ -1,4 +1,4 @@
-import os.path
+import os.path, re
 
 
 class md_contents_table:
@@ -41,10 +41,8 @@ class md_contents_table:
         if len(contents) == 0:
             return
 
-        if len(contents[0]) != 0:  # If line is blank, skip
-            # If line starts with a "#", add to headings
-            if contents[0][0] == "#":
-                self._headings.append(contents[0])
+        if re.search("^#{1,6} ", contents[0]) != None:
+            self._headings.append(contents[0])
 
         # Recursive step
         contents.pop(0)
