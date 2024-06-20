@@ -34,7 +34,8 @@ class md_contents_table():
         # Recursive base case
         if len(contents) == 0: return
 
-        if len(contents[0]) != 0:
+        if len(contents[0]) != 0: # If line is blank, skip
+            # If line starts with a "#", add to headings
             if contents[0][0] == "#": self._headings.append(contents[0])
 
         # Recursive step
