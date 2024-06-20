@@ -83,6 +83,12 @@ def describe_read_file_contents():
 # Find and store all the headings from the md file contents
 def describe_find_headings():
     def test_able_to_store_headings():
+        ## Creates a list for headings
+        test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
+        test_mdCT.read_file_contents()
+        test_mdCT.find_headings()
+        assert type(test_mdCT._headings) == list
+
         ## Stores a list of the headings found
         test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
         test_mdCT.read_file_contents()
@@ -163,9 +169,29 @@ def describe_find_headings():
         ]
 
 
-# Format the contents table ready to be written, numbered according to the heading level (number of #'s) and in what order they appear
-def describe_format_headings():
-    return    
+# Format the contents table ready to be written, numbered according to the heading level
+# (number of #'s) and in what order they appear
+# def describe_format_headings():
+#     # Creates a string
+#     test_mdCT = mdCT.md_contents_table("./test 3 1 top level heading.md")
+#     test_mdCT.read_file_contents()
+#     test_mdCT.find_headings()
+#     actual = test_mdCT.format_headings()
+#     assert type(actual) == []
+
+    # numbers a top level heading, e.g: 1. <heading>
+
+    # correctly numbers a heading of each level, (e.g 4th level) = 1.1.1.1. <heading>
+
+    # correctly resets numbering to 1 where a higher level heading interrupts from previous count
+    # 1.2 <heading>
+    # 2. <heading>
+    # 2.1 <heading> <-- the second level heading was previously at "2."
+
+    # Correctly formats the headings as a single string
+
+    # Splits headings with a new line character (\n is sufficient)
+
 
 # Remove an exisitng contents table if required
 
