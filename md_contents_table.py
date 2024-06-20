@@ -63,6 +63,8 @@ class md_contents_table:
         # [:-1] removes the ending whitespace, len() converts # to number (heading level)
         heading_level = len(heading_level[:-1])
 
+        #tabs = lambda heading, formatted_str
+
         if heading_level > previous_level:
             heading_text = headings[0][heading_level + 1 :]
             self._formatted_contents_table += f"\t{heading_level}. {heading_text}\n"

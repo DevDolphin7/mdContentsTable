@@ -36,7 +36,6 @@ def describe_initialisation():
         with pytest.raises(ValueError):
             mdCT.md_contents_table("./hello_world.md")
 
-
     def test_parameters():
         # Initialising stores the file path as a class variable
         test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
@@ -48,7 +47,6 @@ def describe_initialisation():
 
         test_mdCT = mdCT.md_contents_table("./test 1 read file.md", False)
         assert test_mdCT.remove_current_table == False
-
 
     def test_memory_reset():
         # Initialising resets all object properties that are not parameters
@@ -64,7 +62,6 @@ def describe_read_file_contents():
         test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
         test_mdCT.read_file_contents()
         assert test_mdCT._file_contents == "Hello, world!"
-
 
     def test_input_file_is_not_mutated():
         # The file is not mutated (uses os.path.getmtime <- get time file was last modified)
@@ -98,7 +95,6 @@ def describe_find_headings():
         test_mdCT.find_headings()
         assert test_mdCT._headings == []
 
-
     def test_finds_one_heading():
         ## Finds 1 top level heading
         test_mdCT = mdCT.md_contents_table("./test 3 1 top level heading.md")
@@ -113,12 +109,11 @@ def describe_find_headings():
         assert test_mdCT._headings == [
             "# Hello",
             "## World",
-            "###### Six",
             "### Three",
             "#### Four",
             "##### Five",
+            "###### Six",
         ]
-
 
     def test_finds_multiple_top_headings():
         ## Finds multiple top level headings
@@ -126,7 +121,6 @@ def describe_find_headings():
         test_mdCT.read_file_contents()
         test_mdCT.find_headings()
         assert test_mdCT._headings == ["# Hello", "# World", "# How are you?"]
-
 
     def test_finds_multiple_each_headings():
         ## Finds multiple of each heading
@@ -148,7 +142,6 @@ def describe_find_headings():
             "#### For",
             "##### Asking",
         ]
-
 
     def test_doesnt_include_any_tags():
         # Doesn't confuse 1 tag
@@ -180,32 +173,41 @@ def describe_find_headings():
 # (number of #'s) and in what order they appear
 def describe_format_headings():
     def test_able_to_store_formatted_string():
-      # Creates a string
-      test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
-      test_mdCT.read_file_contents()
-      test_mdCT.find_headings()
-      test_mdCT.format_headings()
-      actual = test_mdCT._formatted_contents_table
-      assert actual == ""
-
+        # Creates a string
+        test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
+        test_mdCT.read_file_contents()
+        test_mdCT.find_headings()
+        test_mdCT.format_headings()
+        actual = test_mdCT._formatted_contents_table
+        assert actual == ""
 
     def test_formats_one_top_level_heading():
-      # numbers a top level heading, e.g: 1. <heading>
-      test_mdCT = mdCT.md_contents_table("./test 3 1 top level heading.md")
-      test_mdCT.read_file_contents()
-      test_mdCT.find_headings()
-      test_mdCT.format_headings()
-      actual = test_mdCT._formatted_contents_table
-      assert actual == "\t1. Hello\n"
+        # numbers a top level heading, e.g: 1. <heading>
+        test_mdCT = mdCT.md_contents_table("./test 3 1 top level heading.md")
+        test_mdCT.read_file_contents()
+        test_mdCT.find_headings()
+        test_mdCT.format_headings()
+        actual = test_mdCT._formatted_contents_table
+        assert actual == "\t1. Hello\n"
 
-      # correctly numbers a heading of each level, (e.g 4th level) = 1.1.1.1. <heading>
+    def test_correctly_numbers_each_level():
+        # correctly numbers a heading of each level, (e.g 4th level) = 1.1.1.1. <heading>
+        test_mdCT = mdCT.md_contents_table("./test 4 1 each level heading.md")
+        test_mdCT.read_file_contents()
+        test_mdCT.find_headings()
+        test_mdCT.format_headings()
+        actual = test_mdCT._formatted_contents_table
+        assert (
+            actual
+            == "\t1. Hello\n\t\t1.1. World\n\t\t\t1.1.1. Three\n\t\t\t\t1.1.1.1. Four\n\t\t\t\t\t1.1.1.1.1. Five\n\t\t\t\t\t\t1.1.1.1.1.1. Six\n"
+        )
 
-      # correctly resets numbering to 1 where a higher level heading interrupts from previous count
-      # 1.2 <heading>
-      # 2. <heading>
-      # 2.1 <heading> <-- the second level heading was previously at "2."
+        # correctly resets numbering to 1 where a higher level heading interrupts from previous count
+        # 1.2 <heading>
+        # 2. <heading>
+        # 2.1 <heading> <-- the second level heading was previously at "2."
 
-      # Correctly formats the headings as a single string
+        # Correctly formats the headings as a single string
 
 
 # Remove an exisitng contents table if required
