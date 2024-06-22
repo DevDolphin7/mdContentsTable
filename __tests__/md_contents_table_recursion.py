@@ -202,12 +202,32 @@ def describe_format_headings():
             == "\t1. Hello\n\t\t1.1. World\n\t\t\t1.1.1. Three\n\t\t\t\t1.1.1.1. Four\n\t\t\t\t\t1.1.1.1.1. Five\n\t\t\t\t\t\t1.1.1.1.1.1. Six\n"
         )
 
+    def test_correctly_resets_numbering():
         # correctly resets numbering to 1 where a higher level heading interrupts from previous count
         # 1.2 <heading>
         # 2. <heading>
         # 2.1 <heading> <-- the second level heading was previously at "2."
+        test_mdCT = mdCT.md_contents_table("./test 9 1 heading reset.md")
+        test_mdCT.read_file_contents()
+        test_mdCT.find_headings()
+        test_mdCT.format_headings()
+        actual = test_mdCT._formatted_contents_table
+        assert (
+            actual
+            == "\t1. Hello\n\t\t1.1. World\n\t\t1.2. How\n\t2. Are\n\t\t2.1. You\n"
+        )
+    
+    def test_correctly_deals_with_a_complex_file():
+        test_mdCT = mdCT.md_contents_table("./test 8 complex file.md")
+        test_mdCT.read_file_contents()
+        test_mdCT.find_headings()
+        test_mdCT.format_headings()
+        actual = test_mdCT._formatted_contents_table
+        assert (
+            actual
+            == "\t1. Hello\n\t\t1.1. World\n\t\t\t1.1.1. How\n\t\t\t\t1.1.1.1. Are\n\t\t\t\t\t1.1.1.1.1. You?\n\t\t1.2. I'm\n\t\t\t\t\t\t1.2.1.1.1.1. Good\n\t2. Thank\n\t\t\t2.1.1. You\n\t\t\t\t2.1.1.1. For\n\t\t\t\t\t2.1.1.1.1. Asking\n"
+        )
 
-        # Correctly formats the headings as a single string
 
 
 # Remove an exisitng contents table if required
