@@ -1,6 +1,4 @@
 import os.path, re
-from operator import itemgetter
-
 
 class md_contents_table:
 
