@@ -32,6 +32,12 @@ class md_contents_table:
         with open(self.file_path, "r") as file:
             self._file_contents = file.read()
 
+    def _if_current_table_then_remove(self):
+        current_table = re.search('<a name="end-of-contents" />\n', self._file_contents)
+        if current_table != None:
+            final_contents_index = current_table.span()[1] + 1
+            self._file_contents = self._file_contents[final_contents_index:]
+
     def _find_headings(self, contents=None):
         # Initialise recursion
         if self._headings == None:
@@ -97,11 +103,13 @@ class md_contents_table:
 
     def _write_output(self):
         with open(self.file_path, "w") as file:
-            file.write(f"""<a name="start-of-contents" />
+            file.write(
+                f"""<a name="start-of-contents" />
 # Contents
 {self._formatted_contents_table}<a name=\"end-of-contents\" />
 
-{self._file_contents}""")
+{self._file_contents}"""
+            )
 
 
 # <a name=\"start-of-contents\" />

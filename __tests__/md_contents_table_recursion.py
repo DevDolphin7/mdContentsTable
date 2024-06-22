@@ -80,6 +80,15 @@ def describe__read_file_contents():
         assert (before == mutated) == True
 
 
+def describe__if_current_table_then_remove():
+    def test_removes_existing_contents_table_from_file_contents():
+        test_mdCT = mdCT.md_contents_table("./test 10 simple output.md")
+        test_mdCT._read_file_contents()
+        test_mdCT._if_current_table_then_remove()
+        actual = test_mdCT._file_contents
+        assert actual == "# Hello\n\nWorld!"
+
+
 # Find and store all the headings from the md file contents
 def describe__find_headings():
     def test_able_to_store_headings():
@@ -229,13 +238,14 @@ def describe__format_headings():
         )
 
 
-# Over-write the contents table then the rest of the file back to the file.
+# Write the contents table then the rest of the file back to the file.
 def describe__write_output():
     def test_adds_a_content_table_to_a_simple_file():
         input_file_path = "./test 10 simple output.md"
 
         test_mdCT = mdCT.md_contents_table(input_file_path)
         test_mdCT._read_file_contents()
+        test_mdCT._if_current_table_then_remove()
         test_mdCT._find_headings()
         test_mdCT._format_headings()
         test_mdCT._write_output()
@@ -244,7 +254,13 @@ def describe__write_output():
             actual = file.read()
             file.close()
 
-        assert actual == "<a name=\"start-of-contents\" />\n# Contents\n\t1. Hello\n<a name=\"end-of-contents\" />\n\n# Hello\n\nWorld!"
+        assert (
+            actual
+            == '<a name="start-of-contents" />\n# Contents\n\t1. Hello\n<a name="end-of-contents" />\n\n# Hello\n\nWorld!'
+        )
+
+    def test_adds_a_content_table_to_a_complex_file():
+            pass
 
 
-# Remove an exisitng contents table if required
+# Make it convenient for user to interact with
