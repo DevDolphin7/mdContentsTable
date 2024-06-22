@@ -260,7 +260,23 @@ def describe__write_output():
         )
 
     def test_adds_a_content_table_to_a_complex_file():
-            pass
+        input_file_path = "./test 11 complex file output.md"
+
+        test_mdCT = mdCT.md_contents_table(input_file_path)
+        test_mdCT._read_file_contents()
+        test_mdCT._if_current_table_then_remove()
+        test_mdCT._find_headings()
+        test_mdCT._format_headings()
+        test_mdCT._write_output()
+
+        with open(input_file_path, "r") as file:
+            actual = file.read()
+            file.close()
+
+        assert (
+            actual
+            == '<a name="start-of-contents" />\n# Contents\n\t1. Hello\n\t\t1.1. World\n\t\t\t1.1.1. How\n\t\t\t\t1.1.1.1. Are\n\t\t\t\t\t1.1.1.1.1. You?\n\t\t1.2. I\'m\n\t\t\t\t\t\t1.2.1.1.1.1. Good\n\t2. Thank\n\t\t\t2.1.1. You\n\t\t\t\t2.1.1.1. For\n\t\t\t\t\t2.1.1.1.1. Asking\n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
+        )
 
 
 # Make it convenient for user to interact with
