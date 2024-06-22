@@ -29,9 +29,11 @@ class md_contents_table:
         self.file_path = file_path
         self.remove_current_table = remove_current_table
 
+
     def read_file_contents(self):
         with open(self.file_path, "r") as file:
             self._file_contents = file.read()
+
 
     def find_headings(self, contents=None):
         # Initialise recursion
@@ -51,6 +53,7 @@ class md_contents_table:
         contents.pop(0)
         self.find_headings(contents=contents)
 
+
     def format_headings(self, headings=None):
         # Initialise recursion
         if headings == None:
@@ -60,22 +63,22 @@ class md_contents_table:
         # Recursion base case
         if len(headings) == 0:
             return
-
+        
         heading_match = re.search("^#{1,6} ", headings[0])
         heading_hashtags = heading_match.group()[:-1]
         heading_text = headings[0][len(heading_hashtags) + 1 :]
 
-        self.format_a_heading(heading_hashtags, heading_text, 1, "")
+        self.format_a_heading(heading_hashtags, heading_text)
 
         # Recursion step
         headings.pop(0)
         self.format_headings(headings=headings)
 
-    def format_a_heading(self, hashtags, text, index, formatted_heading):
+
+    def format_a_heading(self, hashtags, text, index=1, formatted_heading=""):
         # Recursion base case
         if len(hashtags) == 0:
-            self._formatted_contents_table = f"{formatted_heading} {text}\n"
-            self._levels[index - 1] += 1
+            self._formatted_contents_table += f"{formatted_heading} {text}\n"
             return
 
         formatted_heading = f"\t{formatted_heading}{self._levels[index]}."
