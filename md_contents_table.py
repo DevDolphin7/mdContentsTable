@@ -122,6 +122,7 @@ class MdContentsTable:
         with open(self.file_path, "w") as file:
             file.write(
                 f"""<a name="start-of-contents" />
+
 # Contents
 {self._formatted_contents_table}<a name=\"end-of-contents\" />
 
