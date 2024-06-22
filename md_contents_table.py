@@ -1,4 +1,5 @@
 import os.path, re
+from operator import itemgetter
 
 
 class md_contents_table:
@@ -13,6 +14,7 @@ class md_contents_table:
         self._file_contents = None
         self._headings = None
         self._formatted_contents_table = ""
+        self._levels = None
 
         if file_path[-3:] != ".md":
             raise ValueError(
@@ -49,43 +51,34 @@ class md_contents_table:
         contents.pop(0)
         self.find_headings(contents=contents)
 
-    def format_headings(self, headings=None, previous_levels=None):
+    def format_headings(self, headings=None):
         # Initialise recursion
         if headings == None:
             headings = self._headings
-
-        if previous_levels == None:
-            previous_levels = {1: 0, 2: 0, 3: 0, 4: 0, 5: 0, 6: 0}
+            self._levels = {1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 1}
 
         # Recursion base case
         if len(headings) == 0:
             return
 
         heading_match = re.search("^#{1,6} ", headings[0])
-        heading_text = heading_match.group()[:-1]
+        heading_hashtags = heading_match.group()[:-1]
+        heading_text = headings[0][len(heading_hashtags) + 1 :]
 
-        def format_string(text, level=1, heading_numbers=""):
-            # Recursion base case
-            if type(text) == int:
-                return f"{heading_numbers} "
-
-            heading_numbers = f"\t{heading_numbers}{previous_levels[level]}."
-            print(heading_numbers, "<--- heading nums", type(heading_numbers))
-
-            # Recursion step - text[1:]
-            format_string(level, text[1:], heading_numbers)
-
-        print(type(self._formatted_contents_table), "<-- contents table")
-        self._formatted_contents_table = (
-            f"{format_string(heading_text)} {self._formatted_contents_table}"
-        )
-        # [:-1] removes the ending whitespace, len() converts # to number (heading level)
-        # heading_level = len(heading_match.group()[:-1])
-
-        # if heading_level > previous_level:
-        #     heading_text = headings[0][heading_level + 1 :]
-        #     self._formatted_contents_table += f"\t{heading_level}. {heading_text}\n"
+        self.format_a_heading(heading_hashtags, heading_text, 1, "")
 
         # Recursion step
         headings.pop(0)
-        self.format_headings(headings=headings, previous_levels=previous_levels)
+        self.format_headings(headings=headings)
+
+    def format_a_heading(self, hashtags, text, index, formatted_heading):
+        # Recursion base case
+        if len(hashtags) == 0:
+            self._formatted_contents_table = f"{formatted_heading} {text}\n"
+            self._levels[index - 1] += 1
+            return
+
+        formatted_heading = f"\t{formatted_heading}{self._levels[index]}."
+
+        # Recursion step
+        self.format_a_heading(hashtags[1:], text, index + 1, formatted_heading)
