@@ -56,11 +56,11 @@ def describe_initialisation():
 
 
 # Read and store the contents of md file
-def describe_read_file_contents():
+def describe__read_file_contents():
     def test_input_file_is_read():
         # The contents of a simple file is read and stored
         test_mdCT = mdCT.md_contents_table("./test 1 read file.md")
-        test_mdCT.read_file_contents()
+        test_mdCT._read_file_contents()
         assert test_mdCT._file_contents == "Hello, world!"
 
     def test_input_file_is_not_mutated():
@@ -71,7 +71,7 @@ def describe_read_file_contents():
             file.close()
 
         test_mdCT = mdCT.md_contents_table(input_file_path)
-        test_mdCT.read_file_contents()
+        test_mdCT._read_file_contents()
 
         with open(input_file_path, "r") as file:
             mutated = file.read()
@@ -81,31 +81,31 @@ def describe_read_file_contents():
 
 
 # Find and store all the headings from the md file contents
-def describe_find_headings():
+def describe__find_headings():
     def test_able_to_store_headings():
         ## Creates a list for headings
         test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
         assert type(test_mdCT._headings) == list
 
         ## Stores a list of the headings found
         test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
         assert test_mdCT._headings == []
 
     def test_finds_one_heading():
         ## Finds 1 top level heading
         test_mdCT = mdCT.md_contents_table("./test 3 1 top level heading.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
         assert test_mdCT._headings == ["# Hello"]
 
         ## Finds 1 of each level
         test_mdCT = mdCT.md_contents_table("./test 4 1 each level heading.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
         assert test_mdCT._headings == [
             "# Hello",
             "## World",
@@ -118,8 +118,8 @@ def describe_find_headings():
     def test_finds_multiple_top_headings():
         ## Finds multiple top level headings
         test_mdCT = mdCT.md_contents_table("./test 5 multiple top level headings.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
         assert test_mdCT._headings == ["# Hello", "# World", "# How are you?"]
 
     def test_finds_multiple_each_headings():
@@ -127,8 +127,8 @@ def describe_find_headings():
         test_mdCT = mdCT.md_contents_table(
             "./test 6 multiple of each level headings.md"
         )
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
         assert test_mdCT._headings == [
             "# Hello",
             "## World",
@@ -146,14 +146,14 @@ def describe_find_headings():
     def test_doesnt_include_any_tags():
         # Doesn't confuse 1 tag
         test_mdCT = mdCT.md_contents_table("./test 7 tag included.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
         assert test_mdCT._headings == ["# Hello"]
 
         ## Doesn't confuse multiple tags
         test_mdCT = mdCT.md_contents_table("./test 8 complex file.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
         assert test_mdCT._headings == [
             "# Hello",
             "## World",
@@ -171,31 +171,31 @@ def describe_find_headings():
 
 # Format the contents table ready to be written, numbered according to the heading level
 # (number of #'s) and in what order they appear
-def describe_format_headings():
+def describe__format_headings():
     def test_able_to_store_formatted_string():
         # Creates a string
         test_mdCT = mdCT.md_contents_table("./test 2 no headings.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
-        test_mdCT.format_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
+        test_mdCT._format_headings()
         actual = test_mdCT._formatted_contents_table
         assert actual == ""
 
     def test_formats_one_top_level_heading():
         # numbers a top level heading, e.g: 1. <heading>
         test_mdCT = mdCT.md_contents_table("./test 3 1 top level heading.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
-        test_mdCT.format_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
+        test_mdCT._format_headings()
         actual = test_mdCT._formatted_contents_table
         assert actual == "\t1. Hello\n"
 
     def test_correctly_numbers_each_level():
         # correctly numbers a heading of each level, (e.g 4th level) = 1.1.1.1. <heading>
         test_mdCT = mdCT.md_contents_table("./test 4 1 each level heading.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
-        test_mdCT.format_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
+        test_mdCT._format_headings()
         actual = test_mdCT._formatted_contents_table
         assert (
             actual
@@ -208,9 +208,9 @@ def describe_format_headings():
         # 2. <heading>
         # 2.1 <heading> <-- the second level heading was previously at "2."
         test_mdCT = mdCT.md_contents_table("./test 9 1 heading reset.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
-        test_mdCT.format_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
+        test_mdCT._format_headings()
         actual = test_mdCT._formatted_contents_table
         assert (
             actual
@@ -219,9 +219,9 @@ def describe_format_headings():
     
     def test_correctly_deals_with_a_complex_file():
         test_mdCT = mdCT.md_contents_table("./test 8 complex file.md")
-        test_mdCT.read_file_contents()
-        test_mdCT.find_headings()
-        test_mdCT.format_headings()
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
+        test_mdCT._format_headings()
         actual = test_mdCT._formatted_contents_table
         assert (
             actual

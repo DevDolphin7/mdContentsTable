@@ -28,11 +28,11 @@ class md_contents_table:
         self.file_path = file_path
         self.remove_current_table = remove_current_table
 
-    def read_file_contents(self):
+    def _read_file_contents(self):
         with open(self.file_path, "r") as file:
             self._file_contents = file.read()
 
-    def find_headings(self, contents=None):
+    def _find_headings(self, contents=None):
         # Initialise recursion
         if self._headings == None:
             self._headings = []
@@ -48,9 +48,9 @@ class md_contents_table:
 
         # Recursive step
         contents.pop(0)
-        self.find_headings(contents=contents)
+        self._find_headings(contents=contents)
 
-    def format_headings(self, headings=None, prior_level=1):
+    def _format_headings(self, headings=None, prior_level=1):
         # Initialise recursion
         if headings == None:
             headings = self._headings
@@ -65,15 +65,15 @@ class md_contents_table:
 
         level = len(heading_hashtags)
         if prior_level < level:
-            self.reset_levels(prior_level, level)
+            self._reset_levels(prior_level, level)
         self._levels[level] += 1
 
-        self.format_a_heading(heading_hashtags, heading_text)
+        self._format_a_heading(heading_hashtags, heading_text)
 
         # Recursion step - headings[1:]
-        self.format_headings(headings=headings[1:], prior_level=level)
+        self._format_headings(headings=headings[1:], prior_level=level)
 
-    def format_a_heading(self, hashtags, text, index=1, formatted_heading=""):
+    def _format_a_heading(self, hashtags, text, index=1, formatted_heading=""):
         # Recursion base case
         if len(hashtags) == 0:
             self._formatted_contents_table += f"{formatted_heading} {text}\n"
@@ -82,9 +82,9 @@ class md_contents_table:
         formatted_heading = f"\t{formatted_heading}{self._levels[index]}."
 
         # Recursion step
-        self.format_a_heading(hashtags[1:], text, index + 1, formatted_heading)
+        self._format_a_heading(hashtags[1:], text, index + 1, formatted_heading)
 
-    def reset_levels(self, prior_level, level):
+    def _reset_levels(self, prior_level, level):
         # Recursive base case
         if prior_level == level:
             self._levels[level] = 0
@@ -93,7 +93,7 @@ class md_contents_table:
         self._levels[prior_level + 1] = 1
 
         # Recursive step - prior_level + 1
-        self.reset_levels(prior_level + 1, level)
+        self._reset_levels(prior_level + 1, level)
 
 
 # <a name=\"start-of-contents\" />
