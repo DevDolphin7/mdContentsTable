@@ -1,15 +1,33 @@
-import os.path, re
+""" This module can be used to create a contents table in a markdown (.md) file.
+
+Try calling: md_contents_table.CreateContentsTable("path/to/<file_name>.md")"""
+
+import os.path
+import re
 
 
-class md_contents_table:
-
+class CreateContentsTable:
+    """Checks a valid .md file exists in order to create a contents table.
+    Parameters:
+    - file_path (str): "path/to/file.md"
+    - remove_current_table=True (bool, optional): Removes previously made content table if it exists.
+    """
     def __init__(self, file_path, remove_current_table=True):
-        """Checks a valid .md file exists in order to create a contents table using create_contents_table().
-        Parameters:
-        - file_path (str): "path/to/file.md"
-        - remove_current_table (bool, optional): Removes previously made content table if it exists.
-        """
+        mdCT = MdContentsTable(file_path)
+        mdCT._read_file_contents()
+        if remove_current_table:
+            mdCT._if_current_table_then_remove()
+        mdCT._find_headings()
+        mdCT._format_headings()
+        mdCT._write_output()
 
+
+class MdContentsTable:
+    """Checks a valid .md file exists in order to create a contents table using create_contents_table().
+    Parameters:
+    - file_path (str): "path/to/file.md"
+    """
+    def __init__(self, file_path=""):
         self._file_contents = None
         self._headings = None
         self._formatted_contents_table = ""
@@ -26,7 +44,6 @@ class md_contents_table:
             )
 
         self.file_path = file_path
-        self.remove_current_table = remove_current_table
 
     def _read_file_contents(self):
         with open(self.file_path, "r") as file:
@@ -102,11 +119,6 @@ class md_contents_table:
         self._reset_levels(prior_level + 1, level)
 
     def _write_output(self):
-        print(repr(f"""<a name="start-of-contents" />
-# Contents
-{self._formatted_contents_table}<a name=\"end-of-contents\" />
-
-{self._file_contents}"""))
         with open(self.file_path, "w") as file:
             file.write(
                 f"""<a name="start-of-contents" />
@@ -115,7 +127,3 @@ class md_contents_table:
 
 {self._file_contents}"""
             )
-
-
-# <a name=\"start-of-contents\" />
-# <a name=\"end-of-contents\" />
