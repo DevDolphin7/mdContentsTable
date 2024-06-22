@@ -216,7 +216,7 @@ def describe__format_headings():
             actual
             == "\t1. Hello\n\t\t1.1. World\n\t\t1.2. How\n\t2. Are\n\t\t2.1. You\n"
         )
-    
+
     def test_correctly_deals_with_a_complex_file():
         test_mdCT = mdCT.md_contents_table("./test 8 complex file.md")
         test_mdCT._read_file_contents()
@@ -229,7 +229,22 @@ def describe__format_headings():
         )
 
 
+# Over-write the contents table then the rest of the file back to the file.
+def describe__write_output():
+    def test_adds_a_content_table_to_a_simple_file():
+        input_file_path = "./test 10 simple output.md"
+
+        test_mdCT = mdCT.md_contents_table(input_file_path)
+        test_mdCT._read_file_contents()
+        test_mdCT._find_headings()
+        test_mdCT._format_headings()
+        test_mdCT._write_output()
+
+        with open(input_file_path, "r") as file:
+            actual = file.read()
+            file.close()
+
+        assert actual == "<a name=\"start-of-contents\" />\n# Contents\n\t1. Hello\n<a name=\"end-of-contents\" />\n\n# Hello\n\nWorld!"
+
 
 # Remove an exisitng contents table if required
-
-# Over-write the contents table then the rest of the file back to the file.

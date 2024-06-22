@@ -95,6 +95,14 @@ class md_contents_table:
         # Recursive step - prior_level + 1
         self._reset_levels(prior_level + 1, level)
 
+    def _write_output(self):
+        with open(self.file_path, "w") as file:
+            file.write(f"""<a name="start-of-contents" />
+# Contents
+{self._formatted_contents_table}<a name=\"end-of-contents\" />
+
+{self._file_contents}""")
+
 
 # <a name=\"start-of-contents\" />
 # <a name=\"end-of-contents\" />
