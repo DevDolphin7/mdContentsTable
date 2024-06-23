@@ -50,6 +50,6 @@ Tests are run through pytest, and utilise the describe-style plugin for pytest.
 
 # Contact
 If you have any feedback or ideas for improvement, please get in touch!  
-Github: https://github.com/DevDolphin7/mdContentsTable  
-PyPI: https://pypi.org/project/md_contents_table/  
-Email: DevDolphin7@outlook.com  
+**Github**: https://github.com/DevDolphin7/mdContentsTable  
+**PyPI**: https://pypi.org/project/md_contents_table/  
+**Email**: DevDolphin7@outlook.com  
