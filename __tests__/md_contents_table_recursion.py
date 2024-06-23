@@ -80,6 +80,20 @@ def describe__if_current_table_then_remove():
         test_mdCT._if_current_table_then_remove()
         actual = test_mdCT._file_contents
         assert actual == "# Hello\n\nWorld!"
+    
+    def test_does_not_remove_content_above_current_table():
+        input_file_path = "./test_files/test 13 contents above content table.md"
+
+        mdCT.CreateContentsTable(input_file_path)
+
+        with open(input_file_path, "r") as file:
+            actual = file.read()
+            file.close()
+
+        assert (
+            actual
+            == '# Title\n\nContent above the contents table\n\n<a name="start-of-contents" />\n\n# Contents\n1. [Title](#title)  \n2. [Hello](#hello)  \n<a name="end-of-contents" />\n\n# Hello\n\nWorld!'
+        )
 
 
 # Find and store all the headings from the md file contents
