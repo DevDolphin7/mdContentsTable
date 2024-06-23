@@ -190,7 +190,7 @@ def describe__format_headings():
         test_mdCT._find_headings()
         test_mdCT._format_headings()
         actual = test_mdCT._formatted_contents_table
-        assert actual == "1. Hello\n"
+        assert actual == "1. [Hello](#hello)  \n"
 
     def test_correctly_numbers_each_level():
         # correctly numbers a heading of each level, (e.g 4th level) = 1.1.1.1. <heading>
@@ -201,7 +201,7 @@ def describe__format_headings():
         actual = test_mdCT._formatted_contents_table
         assert (
             actual
-            == "1. Hello\n\t1. World\n\t\t1. Three\n\t\t\t1. Four\n\t\t\t\t1. Five\n\t\t\t\t\t1. Six\n"
+            == "1. [Hello](#hello)  \n\t1. [World](#world)  \n\t\t1. [Three](#three)  \n\t\t\t1. [Four](#four)  \n\t\t\t\t1. [Five](#five)  \n\t\t\t\t\t1. [Six](#six)  \n"
         )
 
     def test_correctly_resets_numbering():
@@ -216,7 +216,7 @@ def describe__format_headings():
         actual = test_mdCT._formatted_contents_table
         assert (
             actual
-            == "1. Hello\n\t1. World\n\t2. How\n2. Are\n\t1. You\n"
+            == "1. [Hello](#hello)  \n\t1. [World](#world)  \n\t2. [How](#how)  \n2. [Are](#are)  \n\t1. [You](#you)  \n"
         )
 
     def test_correctly_deals_with_a_complex_file():
@@ -227,7 +227,7 @@ def describe__format_headings():
         actual = test_mdCT._formatted_contents_table
         assert (
             actual
-            == "1. Hello\n\t1. World\n\t\t1. How\n\t\t\t1. Are\n\t\t\t\t1. You?\n\t2. I'm\n\t\t\t\t\t1. Good\n2. Thank\n\t\t1. You\n\t\t\t1. For\n\t\t\t\t1. Asking\n"
+            == "1. [Hello](#hello)  \n\t1. [World](#world)  \n\t\t1. [How](#how)  \n\t\t\t1. [Are](#are)  \n\t\t\t\t1. [You?](#you?)  \n\t2. [I'm](#i'm)  \n\t\t\t\t\t1. [Good](#good)  \n2. [Thank](#thank)  \n\t\t1. [You](#you)  \n\t\t\t1. [For](#for)  \n\t\t\t\t1. [Asking](#asking)  \n"
         )
 
 
@@ -249,7 +249,7 @@ def describe__write_output():
 
         assert (
             actual
-            == '<a name="start-of-contents" />\n\n# Contents\n1. Hello\n<a name="end-of-contents" />\n\n# Hello\n\nWorld!'
+            == '<a name="start-of-contents" />\n\n# Contents\n1. [Hello](#hello)  \n<a name="end-of-contents" />\n\n# Hello\n\nWorld!'
         )
 
     def test_adds_a_content_table_to_a_complex_file():
@@ -268,7 +268,7 @@ def describe__write_output():
 
         assert (
             actual
-            == '<a name="start-of-contents" />\n\n# Contents\n1. Hello\n\t1. World\n\t\t1. How\n\t\t\t1. Are\n\t\t\t\t1. You?\n\t2. I\'m\n\t\t\t\t\t1. Good\n2. Thank\n\t\t1. You\n\t\t\t1. For\n\t\t\t\t1. Asking\n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
+            == '<a name="start-of-contents" />\n\n# Contents\n1. [Hello](#hello)  \n\t1. [World](#world)  \n\t\t1. [How](#how)  \n\t\t\t1. [Are](#are)  \n\t\t\t\t1. [You?](#you?)  \n\t2. [I\'m](#i\'m)  \n\t\t\t\t\t1. [Good](#good)  \n2. [Thank](#thank)  \n\t\t1. [You](#you)  \n\t\t\t1. [For](#for)  \n\t\t\t\t1. [Asking](#asking)  \n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
         )
 
 
@@ -283,24 +283,21 @@ def describe_CreateContentsTable():
             actual = file.read()
             file.close()
 
-        print(repr(actual), "<--- output")
         assert (
             actual
-            == '<a name="start-of-contents" />\n\n# Contents\n1. Contents\n2. Hello\n\t1. World\n\t\t1. How\n\t\t\t1. Are\n\t\t\t\t1. You?\n\t2. I\'m\n\t\t\t\t\t1. Good\n3. Thank\n\t\t1. You\n\t\t\t1. For\n\t\t\t\t1. Asking\n<a name="end-of-contents" />\n\n<a name="start-of-contents"/>  \n# Contents\n\n1. [Hello](#Hello)  \n\t1. [World](#World)  \n\t\t1. How  \n    \t\t1. Are  \n    \t\t\t1. You?  \n\t2. I\'m  \n    \t\t\t\t1. Good  \n2. Thank  \n\t1. You  \n    \t1. For  \n    \t\t\t1. [Asking](#asking)  \n<a name="end-of-contents"/>\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
+            == '<a name="start-of-contents" />\n\n# Contents\n1. [Hello](#hello)  \n\t1. [World](#world)  \n\t\t1. [How](#how)  \n\t\t\t1. [Are](#are)  \n\t\t\t\t1. [You?](#you?)  \n\t2. [I\'m](#i\'m)  \n\t\t\t\t\t1. [Good](#good)  \n2. [Thank](#thank)  \n\t\t1. [You](#you)  \n\t\t\t1. [For](#for)  \n\t\t\t\t1. [Asking](#asking)  \n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
         )
     
-    # def test_links_to_headings():
-    #     input_file_path = "./test_files/test 13 heading links.md"
+    def test_links_to_headings():
+        input_file_path = "./test_files/test 12 convenient user interface.md"
 
-    #     mdCT.CreateContentsTable(input_file_path)
+        mdCT.CreateContentsTable(input_file_path)
 
-    #     with open(input_file_path, "r") as file:
-    #         actual = file.read()
-    #         file.close()
+        with open(input_file_path, "r") as file:
+            actual = file.read()
+            file.close()
 
-    #     assert (
-    #         actual
-    #         == '<a name="start-of-contents" />\n\n# Contents\n\t1. Hello\n\t\t1.1. World\n\t\t\t1.1.1. How\n\t\t\t\t1.1.1.1. Are\n\t\t\t\t\t1.1.1.1.1. You?\n\t\t1.2. I\'m\n\t\t\t\t\t\t1.2.1.1.1.1. Good\n\t2. Thank\n\t\t\t2.1.1. You\n\t\t\t\t2.1.1.1. For\n\t\t\t\t\t2.1.1.1.1. Asking\n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
-    #     )
-
-# Implement heading links idea
+        assert (
+            actual
+            == '<a name="start-of-contents" />\n\n# Contents\n1. [Hello](#hello)  \n\t1. [World](#world)  \n\t\t1. [How](#how)  \n\t\t\t1. [Are](#are)  \n\t\t\t\t1. [You?](#you?)  \n\t2. [I\'m](#i\'m)  \n\t\t\t\t\t1. [Good](#good)  \n2. [Thank](#thank)  \n\t\t1. [You](#you)  \n\t\t\t1. [For](#for)  \n\t\t\t\t1. [Asking](#asking)  \n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
+        )

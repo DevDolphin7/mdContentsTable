@@ -101,7 +101,9 @@ class MdContentsTable:
     def _format_a_heading(self, hashtags, text, index=0, formatted_heading=""):
         # Recursion base case
         if len(hashtags) == 0:
-            self._formatted_contents_table += f"{formatted_heading}{self._levels[index]}. {text}\n"[1:]
+            self._formatted_contents_table += f"{formatted_heading}{self._levels[index]}. [{text}](#{text.lower()})  \n"[
+                1:
+            ]
             return
 
         formatted_heading = f"\t{formatted_heading}"
