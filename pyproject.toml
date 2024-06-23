@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "md_contents_table"
+version = "1.0.0"
+authors = [
+  { name="DevDolphin7", email="devdolphin7@outlook.com" },
+]
+description = "This module can be used to create a contents table in a markdown file."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Operating System :: OS Independent",
+]
+dependencies = []
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "pytest-describe",
+]
+
+[project.urls]
+Homepage = "https://github.com/DevDolphin7/mdContentsTable"
