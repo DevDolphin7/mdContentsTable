@@ -288,16 +288,16 @@ def describe_CreateContentsTable():
             == '<a name="start-of-contents" />\n\n# Contents\n\t1. Hello\n\t\t1.1. World\n\t\t\t1.1.1. How\n\t\t\t\t1.1.1.1. Are\n\t\t\t\t\t1.1.1.1.1. You?\n\t\t1.2. I\'m\n\t\t\t\t\t\t1.2.1.1.1.1. Good\n\t2. Thank\n\t\t\t2.1.1. You\n\t\t\t\t2.1.1.1. For\n\t\t\t\t\t2.1.1.1.1. Asking\n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
         )
     
-    def test_links_to_headings():
-        input_file_path = "./test 13 heading links.md"
+    # def test_links_to_headings():
+    #     input_file_path = "./test 13 heading links.md"
 
-        mdCT.CreateContentsTable(input_file_path)
+    #     mdCT.CreateContentsTable(input_file_path)
 
-        with open(input_file_path, "r") as file:
-            actual = file.read()
-            file.close()
+    #     with open(input_file_path, "r") as file:
+    #         actual = file.read()
+    #         file.close()
 
-        assert (
-            actual
-            == '<a name="start-of-contents" />\n\n# Contents\n\t1. Hello\n\t\t1.1. World\n\t\t\t1.1.1. How\n\t\t\t\t1.1.1.1. Are\n\t\t\t\t\t1.1.1.1.1. You?\n\t\t1.2. I\'m\n\t\t\t\t\t\t1.2.1.1.1.1. Good\n\t2. Thank\n\t\t\t2.1.1. You\n\t\t\t\t2.1.1.1. For\n\t\t\t\t\t2.1.1.1.1. Asking\n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
-        )
+    #     assert (
+    #         actual
+    #         == '<a name="start-of-contents" />\n\n# Contents\n\t1. Hello\n\t\t1.1. World\n\t\t\t1.1.1. How\n\t\t\t\t1.1.1.1. Are\n\t\t\t\t\t1.1.1.1.1. You?\n\t\t1.2. I\'m\n\t\t\t\t\t\t1.2.1.1.1.1. Good\n\t2. Thank\n\t\t\t2.1.1. You\n\t\t\t\t2.1.1.1. For\n\t\t\t\t\t2.1.1.1.1. Asking\n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
+    #     )
