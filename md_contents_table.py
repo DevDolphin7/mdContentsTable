@@ -12,6 +12,7 @@ class CreateContentsTable:
     - file_path (str): "path/to/file.md"
     - remove_current_table=True (bool, optional): Removes previously made content table if it exists.
     """
+
     def __init__(self, file_path, remove_current_table=True):
         mdCT = MdContentsTable(file_path)
         mdCT._read_file_contents()
@@ -27,6 +28,7 @@ class MdContentsTable:
     Parameters:
     - file_path (str): "path/to/file.md"
     """
+
     def __init__(self, file_path=""):
         self._file_contents = None
         self._headings = None
@@ -96,13 +98,13 @@ class MdContentsTable:
         # Recursion step - headings[1:]
         self._format_headings(headings=headings[1:], prior_level=level)
 
-    def _format_a_heading(self, hashtags, text, index=1, formatted_heading=""):
+    def _format_a_heading(self, hashtags, text, index=0, formatted_heading=""):
         # Recursion base case
         if len(hashtags) == 0:
-            self._formatted_contents_table += f"{formatted_heading} {text}\n"
+            self._formatted_contents_table += f"{formatted_heading}{self._levels[index]}. {text}\n"[1:]
             return
 
-        formatted_heading = f"\t{formatted_heading}{self._levels[index]}."
+        formatted_heading = f"\t{formatted_heading}"
 
         # Recursion step
         self._format_a_heading(hashtags[1:], text, index + 1, formatted_heading)

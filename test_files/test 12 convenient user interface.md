@@ -1,18 +1,35 @@
 <a name="start-of-contents" />
 
 # Contents
-	1. Hello
-		1.1. World
-			1.1.1. How
-				1.1.1.1. Are
-					1.1.1.1.1. You?
-		1.2. I'm
-						1.2.1.1.1.1. Good
-	2. Thank
-			2.1.1. You
-				2.1.1.1. For
-					2.1.1.1.1. Asking
+1. Contents
+2. Hello
+	1. World
+		1. How
+			1. Are
+				1. You?
+	2. I'm
+					1. Good
+3. Thank
+		1. You
+			1. For
+				1. Asking
 <a name="end-of-contents" />
+
+<a name="start-of-contents"/>  
+# Contents
+
+1. [Hello](#Hello)  
+	1. [World](#World)  
+		1. How  
+    		1. Are  
+    			1. You?  
+	2. I'm  
+    				1. Good  
+2. Thank  
+	1. You  
+    	1. For  
+    			1. [Asking](#asking)  
+<a name="end-of-contents"/>
 
 # Hello
 **Hello text!**
