@@ -1,0 +1,11 @@
+LICENSE
+README.md
+pyproject.toml
+setup.py
+md_contents_table/__init__.py
+md_contents_table.egg-info/PKG-INFO
+md_contents_table.egg-info/SOURCES.txt
+md_contents_table.egg-info/dependency_links.txt
+md_contents_table.egg-info/requires.txt
+md_contents_table.egg-info/top_level.txt
+md_contents_table/tests/md_contents_table_recursion.py
