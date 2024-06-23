@@ -1,6 +1,7 @@
 """ Aim: Use TDD in python to develop a class that returns a string of the various headings
 numbered as per a contents table for an md file.
 For example:
+
 # Hello
 Text
 ## World
@@ -9,13 +10,16 @@ Other text
 ## Inner Levels Reset
 ###### Counts Six Levels
 
-Would re-write the file to appear as follows (including # Contents and the table):
+
+Would re-write the file to appear as below, including # Contents and the table.
+The headings should link to the relevant sections.
+
 # Contents
- 1. Hello
-  1.1. World
- 2. Heading
-   2.1 Inner Levels Reset
-      2.1.1.1.1.1 Counts Six Levels
+1. Hello
+    1. World
+2. Heading
+    1. Inner Levels Reset
+                        1. Counts Six Levels
 
 # Hello
 Text
@@ -45,7 +49,10 @@ def describe_initialisation():
         # Initialising resets all object properties that are not parameters
         test_mdCT = mdCT.MdContentsTable("./test_files/test 1 read file.md")
         assert test_mdCT._file_contents == None
+        assert test_mdCT._pre_table_file_contents == ""
         assert test_mdCT._headings == None
+        assert test_mdCT._formatted_contents_table == ""
+        assert test_mdCT._levels == None
 
 
 # Read and store the contents of md file
@@ -80,7 +87,7 @@ def describe__if_current_table_then_remove():
         test_mdCT._if_current_table_then_remove()
         actual = test_mdCT._file_contents
         assert actual == "# Hello\n\nWorld!"
-    
+
     def test_does_not_remove_content_above_current_table():
         input_file_path = "./test_files/test 13 contents above content table.md"
 
@@ -92,7 +99,7 @@ def describe__if_current_table_then_remove():
 
         assert (
             actual
-            == '# Title\n\nContent above the contents table\n\n<a name="start-of-contents" />\n\n# Contents\n1. [Title](#title)  \n2. [Hello](#hello)  \n<a name="end-of-contents" />\n\n# Hello\n\nWorld!'
+            == '# Title \n\nContent above the contents table, not included in the contents table\n<a name="start-of-contents" />\n\n# Contents\n1. [Hello](#hello)  \n<a name="end-of-contents" />\n\n# Hello\n\nWorld!'
         )
 
 
@@ -133,7 +140,9 @@ def describe__find_headings():
 
     def test_finds_multiple_top_headings():
         ## Finds multiple top level headings
-        test_mdCT = mdCT.MdContentsTable("./test_files/test 5 multiple top level headings.md")
+        test_mdCT = mdCT.MdContentsTable(
+            "./test_files/test 5 multiple top level headings.md"
+        )
         test_mdCT._read_file_contents()
         test_mdCT._find_headings()
         assert test_mdCT._headings == ["# Hello", "# World", "# How are you?"]
@@ -301,7 +310,7 @@ def describe_CreateContentsTable():
             actual
             == '<a name="start-of-contents" />\n\n# Contents\n1. [Hello](#hello)  \n\t1. [World](#world)  \n\t\t1. [How](#how)  \n\t\t\t1. [Are](#are)  \n\t\t\t\t1. [You?](#you?)  \n\t2. [I\'m](#i\'m)  \n\t\t\t\t\t1. [Good](#good)  \n2. [Thank](#thank)  \n\t\t1. [You](#you)  \n\t\t\t1. [For](#for)  \n\t\t\t\t1. [Asking](#asking)  \n<a name="end-of-contents" />\n\n# Hello\n**Hello text!**\n\n## World\nText with a paragraph\n\nAnother paragraph\n\n### How\n```js\nfunction thisIsHow() {\n    console.log("we do it")\n}\n```\n\n#### Are\n> Othr forms of text formatting are available\n##### You?\n\n## I\'m\n#trees\n###### Good\n#seas\n# Thank\nText and then a #tag, why not?\n### You\n`random code snippets` that aren\'t long enough for a big box\n#### For\n##### Asking\n'
         )
-    
+
     def test_links_to_headings():
         input_file_path = "./test_files/test 12 convenient user interface.md"
 

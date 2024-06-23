@@ -31,6 +31,7 @@ class MdContentsTable:
 
     def __init__(self, file_path=""):
         self._file_contents = None
+        self._pre_table_file_contents = ""
         self._headings = None
         self._formatted_contents_table = ""
         self._levels = None
@@ -52,9 +53,22 @@ class MdContentsTable:
             self._file_contents = file.read()
 
     def _if_current_table_then_remove(self):
-        current_table = re.search('<a name="end-of-contents" />\n', self._file_contents)
-        if current_table != None:
-            final_contents_index = current_table.span()[1] + 1
+        current_table_start = re.search(
+            '<a name="start-of-contents" />\n', self._file_contents
+        )
+        if current_table_start != None:
+            current_table_end = re.search(
+                '<a name="end-of-contents" />\n', self._file_contents
+            )
+            if current_table_end == None:
+                raise ValueError(
+                    'The end of content tag <a name="end-of-contents" /> has been removed. Please replace this tag inside the .md file.'
+                )
+
+            first_contents_index = current_table_start.span()[0]
+            self._pre_table_file_contents = self._file_contents[0:first_contents_index]
+
+            final_contents_index = current_table_end.span()[1] + 1
             self._file_contents = self._file_contents[final_contents_index:]
 
     def _find_headings(self, contents=None):
@@ -125,7 +139,7 @@ class MdContentsTable:
     def _write_output(self):
         with open(self.file_path, "w") as file:
             file.write(
-                f"""<a name="start-of-contents" />
+                f"""{self._pre_table_file_contents}<a name="start-of-contents" />
 
 # Contents
 {self._formatted_contents_table}<a name=\"end-of-contents\" />

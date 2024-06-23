@@ -1,6 +1,6 @@
 # Title 
 
-Content above the contents table
+Content above the contents table, not included in the contents table
 <a name="start-of-contents" />
 
 # Contents
